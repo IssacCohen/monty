@@ -1,122 +1,99 @@
 #include "monty.h"
 
 /**
- * f_push - add node to the stack
- * @head: stack head
- * @counter: line_number
- * Return: no return
+ * _push - adds a node to the stack
+ * @head: double pointer to the head of the stack
+ * @line_number: current line number in the file
  */
-void f_push(stack_t **head, unsigned int counter)
+void _push(stack_t **head, unsigned int line_number)
 {
-	int n, j = 0, flag = 0;
+	int n;
+	stack_t *new_node;
 
-	if (bus.arg)
+	if (!bus.arg || !isdigit(*bus.arg))
 	{
-		if (bus.arg[0] == '-')
-			j++;
-		for (; bus.arg[j] != '\0'; j++)
-		{
-			if (bus.arg[j] > 57 || bus.arg[j] < 48)
-				flag = 1;
-		}
-		if (flag == 1)
-		{
-			/* Display an error message for invalid input */
-			fprintf(stderr, "L%d: usage: push integer\n", counter);
-			fclose(bus.file);
-			free(bus.content);
-			free_stack(*head);
-			exit(EXIT_FAILURE);
-		}
-	}
-	else
-	{
-		/* Display an error message for missing input */
-		fprintf(stderr, "L%d: usage: push integer\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
 	n = atoi(bus.arg);
-	if (bus.lifi == 0)
-		addnode(head, n);
-	else
-		addqueue(head, n);
+	new_node = malloc(sizeof(stack_t));
+	if (!new_node)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+
+	new_node->n = n;
+	new_node->prev = NULL;
+	new_node->next = *head;
+
+	if (*head != NULL)
+		(*head)->prev = new_node;
+	*head = new_node;
 }
 
 /**
- * f_pint - prints the top
- * @head: stack head
- * @counter: line_number
- * Return: no return
-*/
-void f_pint(stack_t **head, unsigned int counter)
+ * _pall - prints all the values on the stack
+ * @head: double pointer to the head of the stack
+ * @line_number: current line number in the file
+ */
+void _pall(stack_t **head, unsigned int line_number)
 {
-	if (*head == NULL)
+	stack_t *current = *head;
+
+	(void)line_number;
+
+	while (current != NULL)
 	{
-		/* Print an error message for an empty stack */
-		fprintf(stderr, "L%u: can't pint, stack empty\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
+		printf("%d\n", current->n);
+		current = current->next;
 	}
-	printf("%d\n", (*head)->n);
 }
 
 /**
- * f_pop - prints the top
- * @head: stack head
- * @counter: line_number
- * Return: no return
-*/
-void f_pop(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
+ * _pint -  prints the value at the top of the stack, followed by a new line
+ * @stack: the node
+ * @line_number: the line number of the instruction
+ */
 
-	if (*head == NULL)
-	{
-		/* Display an error message if attempting to pop from an empty stack. */
-		fprintf(stderr, "L%d: can't pop an empty stack\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	h = *head;
-	*head = h->next;
-	free(h);
+void _pint(stack_t **stack, unsigned int line_number)
+{
+	(void) stack; /**stack is not used in this function **/
+	(void) line_number;
+
+	printf("%d\n", head->n);
 }
 
 /**
- * f_swap - adds the top two elements of the stack.
- * @head: stack head
- * @counter: line_number
- * Return: no return
-*/
-void f_swap(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
-	int len = 0, aux;
+ * _pop - removes the top element of the stack
+ * @stack: the node
+ * @line_number: the line number of the instruction
+ */
 
-	h = *head;
-	while (h)
-	{
-		h = h->next;
-		len++;
-	}
-	if (len < 2)
-	{
-		/* Print an error message to swap when the stack is too short */
-		fprintf(stderr, "L%d: can't swap, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	h = *head;
-	aux = h->n;
-	h->n = h->next->n;
-	h->next->n = aux;
+void _pop(stack_t **stack, unsigned int line_number)
+{
+	stack_t *tmp;
+
+	(void) stack; /**stack is not used in this function **/
+	(void) line_number;
+	tmp = head;
+	head = head->next;
+	free(tmp);
+}
+
+/**
+ * _swap -  swaps the top two elements of the stack
+ * @stack: the node
+ * @line_number: the line number of the instruction
+ */
+
+void _swap(stack_t **stack, unsigned int line_number)
+{
+	int tmp = head->n;
+	(void) stack; /**stack is not used in this function **/
+	(void) line_number;
+
+	head->n = (head->next)->n;
+	(head->next)->n = tmp;
 }
