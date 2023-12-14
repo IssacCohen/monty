@@ -1,34 +1,53 @@
 #include "monty.h"
 
 /**
- * _push - adds a node to the stack or queue
- * @stack: the node
- * @line_number: the line number of the instruction
+ * _push - Pushes an element onto the stack.
+ * @head: Pointer to the head of the stack
+ * @number: Value to be pushed onto the stack
  */
-
-void _push(stack_t **stack, unsigned int line_number)
+void _push(stack_t **head, unsigned int number)
 {
-	stack_t *tmp = *stack;
-	(void) line_number;
+	stack_t *new_node;
 
-	/** head is the global variable for the stack or queue*/
-	add_dnodeint(&head, (*stack)->n); /**stack->n is the value of the new node*/
-	free(tmp);
+	new_node = malloc(sizeof(stack_t));
+	if (!new_node)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+
+	new_node->n = number;
+	new_node->prev = NULL;
+
+	if (*head)
+	{
+		new_node->next = *head;
+		(*head)->prev = new_node;
+	}
+	else
+	{
+		new_node->next = NULL;
+	}
+
+	*head = new_node;
 }
 
 /**
- * _pall - prints the stack or queue
- * @stack: the node
- * @line_number: the line number of the instruction
+ * _pall - Prints all the values on the stack.
+ * @head: Pointer to the head of the stack
+ * @line_number: Line number in the file
  */
-
-void _pall(stack_t **stack, unsigned int line_number)
+void _pall(stack_t **head, unsigned int line_number)
 {
-	(void) stack; /**stack is not used in this function **/
-	(void) line_number;
+	stack_t *current = *head;
+	(void)line_number;
 
-	/*if (head != NULL)*/
-	print_dlistint(head); /** head is the stack or queue*/
+	while (current)
+	{
+		printf("%d\n", current->n);
+		current = current->next;
+	}
 }
 
 /**
