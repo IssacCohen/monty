@@ -49,6 +49,7 @@ size_t print_dlistint(const stack_t *h);
 stack_t *add_dnodeint(stack_t **stack, int n);
 stack_t *create_node(char *str);
 char *clean_line(char *content);
+int cmd_list(char *input, char *lines[][3]);
 
 void _push(stack_t **head, unsigned int number);
 void _pall(stack_t **head, unsigned int number);
@@ -72,5 +73,13 @@ void addqueue(stack_t **head, int n);
 void free_dlistint(stack_t *head);
 void _queue(stack_t **head, unsigned int counter);
 void _stack(stack_t **head, unsigned int counter);
+
+/*** miscellaneous ***/
+void _launcher(char *lines[][3], int numLines);
+void free_grid2(char *grid[][3], int numTokens);
+void free_grid(char *lines[][3]);
+
+void exit_err(int flag, char *lines[][3], unsigned int L, char *cmd, int nL);
+int func(instruction_t data, char **toks, unsigned int line_number, int mode);
 
 #endif /* MONTY_H */
