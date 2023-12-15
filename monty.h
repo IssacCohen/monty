@@ -51,11 +51,13 @@ stack_t *create_node(char *str);
 char *clean_line(char *content);
 int cmd_list(char *input, char *lines[][3]);
 
-void _push(stack_t **head, unsigned int number);
-void _pall(stack_t **head, unsigned int number);
+/*** pushpull ***/
+void _push(stack_t **head, unsigned int line_number);
+void _pall(stack_t **head, unsigned int line_number);
+
 void _pint(stack_t **head, unsigned int number);
-int execute(char *content, stack_t **head, unsigned int counter, FILE *file);
-void free_stack(stack_t *head);
+void execute(char *content, stack_t **stack, unsigned int counter, FILE *file);
+void free_stack(stack_t *stack);
 void _pop(stack_t **head, unsigned int counter);
 void _swap(stack_t **head, unsigned int counter);
 void _add(stack_t **head, unsigned int counter);
