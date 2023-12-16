@@ -87,7 +87,7 @@ int token_line(char *line, stack_t **top)
 	char *token, *value;
 	int i;
 	instruction_t *ops = init_ops();
-	size_t len = strlen(line);
+	size_t len = strlen(line); /* len of the line */
 
 	if (len > 0 && line[len - 1] == '\n')
 	{

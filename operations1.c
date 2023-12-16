@@ -9,8 +9,7 @@
  */
 void _push(stack_t **top, unsigned int value)
 {
-	stack_t *new_node = malloc(sizeof(stack_t));
-
+	stack_t *new_node = malloc(sizeof(stack_t)); /* create new node */
 	if (!value)
 	{
 		free(new_node);
@@ -64,7 +63,7 @@ void print_stack(stack_t **top, unsigned int value)
  */
 void print_top(stack_t **top, unsigned int value)
 {
-	(void)value;
+	(void)value; /* unused parameter */
 
 	if (!(*top))
 	{

@@ -8,8 +8,7 @@
 void _add(stack_t **top, unsigned int value)
 {
 	int val;
-	(void)value;
-
+	(void)value; /* unused element */
 	if (!top || !(*top) || !((*top)->next))
 	{
 		fprintf(stderr, "L%d: can't add, stack too short\n", line_number);
@@ -18,7 +17,7 @@ void _add(stack_t **top, unsigned int value)
 
 	val = (*top)->n + (*top)->next->n;
 	(*top)->next->n = val;
-	_element(top, value);
+	_add(top, value);
 }
 
 /**
@@ -29,8 +28,7 @@ void _add(stack_t **top, unsigned int value)
 void _sub(stack_t **top, unsigned int value)
 {
 	int val;
-	(void)value;
-
+	(void)value; /* unused element */
 	if (!top || !(*top) || !((*top)->next))
 	{
 		fprintf(stderr, "L%d: can't sub, stack too short\n", line_number);
@@ -57,7 +55,6 @@ void _mul(stack_t **top, unsigned int value)
 		fprintf(stderr, "L%d: can't mul, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-
 	val = (*top)->next->n * (*top)->n;
 	(*top)->next->n = val;
 	_pop(top, value);
@@ -76,8 +73,7 @@ void _rotl(stack_t **top, unsigned int value)
 	if (!top || !*top || !(*top)->next)
 		return;
 
-	tmp = *top;
-
+	tmp = *top; /* save the top */
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 

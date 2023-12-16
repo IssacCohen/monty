@@ -65,8 +65,7 @@ void _mod(stack_t **top, unsigned int value)
  */
 void _pchar(stack_t **top, unsigned int value)
 {
-	(void)value;
-
+	(void)value; /* unused parameter */
 	if (!(*top))
 	{
 		fprintf(stderr, "L%d: can't pchar, stack empty", line_number);
@@ -90,14 +89,12 @@ void _pstr(stack_t **top, unsigned int value)
 {
 	int idx;
 	stack_t *tmp;
-	(void)value;
-
+	(void)value; /* unused parameter */
 	if (top == NULL || *top == NULL)
 	{
 		printf("\n");
 		return;
 	}
-
 	tmp = *top;
 	while (tmp != NULL)
 	{
